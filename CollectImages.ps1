@@ -1,8 +1,9 @@
 # Define the source directory (where Directory_1 to Directory_16 are located)
-$sourceDir = "C:\Users\hp\OneDrive\Desktop\CAaaa\Normal"
+$sourceDir = "C:\Users\hp\OneDrive\Desktop\sebele_mihiretu_project\Dataset\Sick"
+
 
 # Define the destination directory (where images will be collected)
-$destinationDir = "C:\Users\hp\OneDrive\Desktop\Normal_Collected_Images"
+$destinationDir = "C:\Users\hp\OneDrive\Desktop\sebele_mihiretu_project\Dataset\Sick_Collected"
 
 # Create the destination folder if it doesn't exist
 if (-not (Test-Path -Path $destinationDir)) {

@@ -38,6 +38,8 @@ Dataset/
 1. Open **PowerShell**.
 2. Copy and paste the script into your PowerShell terminal or save it as `collect-images.ps1`.
 3. Run the script.
+   .\collect-images.ps1
+
 
 > ⚠️ Make sure to run PowerShell with the necessary file access permissions.
 

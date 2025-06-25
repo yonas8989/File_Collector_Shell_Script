@@ -1,9 +1,8 @@
-# Define the source directory (where Directory_1 to Directory_16 are located)
-$sourceDir = "C:\Users\hp\OneDrive\Desktop\sebele_mihiretu_project\Dataset\Sick"
+# Define the source directory
+$sourceDir = "C:\Users\hp\OneDrive\Desktop\sebele_mihiretu_project\Dataset\Normal"
 
-
-# Define the destination directory (where images will be collected)
-$destinationDir = "C:\Users\hp\OneDrive\Desktop\sebele_mihiretu_project\Dataset\Sick_Collected"
+# Define the destination directory
+$destinationDir = "C:\Users\hp\OneDrive\Desktop\sebele_mihiretu_project\Dataset\Normal_collected"
 
 # Create the destination folder if it doesn't exist
 if (-not (Test-Path -Path $destinationDir)) {
@@ -13,10 +12,29 @@ if (-not (Test-Path -Path $destinationDir)) {
 # Array of common image file extensions
 $imageExtensions = @("*.jpg", "*.jpeg", "*.png", "*.bmp", "*.gif")
 
+# Initialize counters
+$successCount = 0
+$errorCount = 0
+
 # Loop through each image extension and copy files
 foreach ($ext in $imageExtensions) {
-    Get-ChildItem -Path $sourceDir -Recurse -Include $ext | 
-    Copy-Item -Destination $destinationDir -Force
+    $files = Get-ChildItem -Path $sourceDir -Recurse -Include $ext
+    foreach ($file in $files) {
+        try {
+            $destinationPath = Join-Path -Path $destinationDir -ChildPath $file.Name
+            # Check if file already exists in destination
+            if (-not (Test-Path -Path $destinationPath)) {
+                Copy-Item -Path $file.FullName -Destination $destinationDir -Force -ErrorAction Stop
+                $successCount++
+            } else {
+                Write-Warning "File already exists: $($file.Name)"
+            }
+        }
+        catch {
+            Write-Warning "Failed to copy $($file.FullName): $_"
+            $errorCount++
+        }
+    }
 }
 
-Write-Host "Images have been collected into $destinationDir"
+Write-Host "Image collection completed. Success: $successCount, Errors: $errorCount"
